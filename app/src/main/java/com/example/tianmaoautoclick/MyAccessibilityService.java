@@ -6,12 +6,23 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.util.Log;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.PermissionListener;
+import com.yhao.floatwindow.Screen;
 
 import java.util.List;
 
@@ -23,6 +34,7 @@ public class MyAccessibilityService extends AccessibilityService {
 
     boolean isshoping  =false ;
     Long shoppingtime  = null ;
+    private Button button;
 
     @Override
     protected void onServiceConnected() {
@@ -88,7 +100,9 @@ public class MyAccessibilityService extends AccessibilityService {
      */
     private void click() {
         if (isshoping && shoppingtime!=null && System.currentTimeMillis()>=shoppingtime) {
-
+            if (button!=null){
+                button.setText("正在秒杀！");
+            }
             AccessibilityNodeInfo rootInActiveWindow = getRootInActiveWindow();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 //确定清空
@@ -128,6 +142,10 @@ public class MyAccessibilityService extends AccessibilityService {
             } else {
                 Toast.makeText(this, "对不起您的手机版本过低", Toast.LENGTH_SHORT).show();
             }
+        }else {
+            if (button!=null && shoppingtime!=null){
+                button.setText( shoppingtime-System.currentTimeMillis()+"");
+            }
         }
     }
 
@@ -155,6 +173,7 @@ public class MyAccessibilityService extends AccessibilityService {
                if (time != 0) {
                    isshoping = true;
                    shoppingtime = time;
+                   showFloatingWindow();
                }
 
             Log.i("天猫辅助器", "onStartCommand: 秒杀时间为"+time);
@@ -171,5 +190,39 @@ public class MyAccessibilityService extends AccessibilityService {
         shoppingtime = null ;
         Toast.makeText(this, "天猫秒杀已关闭", Toast.LENGTH_SHORT).show();
         super.onDestroy();
+    }
+
+
+
+    private void showFloatingWindow() {
+        if (button==null) {
+            // 新建悬浮窗控件
+            button = new Button(getApplicationContext());
+            button.setText("等待秒杀");
+            button.setBackgroundColor(Color.BLACK);
+            button.setTextColor(Color.WHITE);
+            button.setPadding(10, 10, 10, 10);
+            FloatWindow
+                    .with(getApplicationContext())
+                    .setView(button)
+                    .setWidth(Screen.width, 0.2f)            //设置控件宽高
+                    .setHeight(Screen.width, 0.2f)
+                    .setX(100)                                   //设置控件初始位置
+                    .setY(Screen.height, 0.3f)
+                    .setDesktopShow(true)                        //桌面显示
+//                .setViewStateListener(mViewStateListener)    //监听悬浮控件状态改变
+                    .setPermissionListener(new PermissionListener() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onFail() {
+                            Toast.makeText(MyAccessibilityService.this, "请您打开悬浮窗权限", Toast.LENGTH_SHORT).show();
+                        }
+                    })  //监听权限申请结果
+                    .build();
+        }
     }
 }

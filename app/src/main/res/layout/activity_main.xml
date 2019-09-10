@@ -50,7 +50,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textColor="#ffffff"
-            android:background="#FF6D00"
+            android:background="#313131"
             android:id="@+id/setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

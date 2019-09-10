@@ -1,6 +1,8 @@
 package com.example.tianmaoautoclick;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -9,6 +11,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.PermissionListener;
+import com.yhao.floatwindow.Screen;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,12 +64,16 @@ public class MainActivity extends AppCompatActivity {
                     startService(tianMaoServerIntent);
                     Toast.makeText(MainActivity.this, "请打开天猫购物车界面进行等待", Toast.LENGTH_SHORT).show();
 //                    去购物车界面
-//                    Intent intent = new Intent();
-//                    intent.setAction("android.intent.action.VIEW");
-//                    String url = "tmall://page.tm/cart";
-//                    Uri uri = Uri.parse(url);
-//                    intent.setData(uri);
-//                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        String url = "tmall://page.tm/cart";
+                        Uri uri = Uri.parse(url);
+                        intent.setData(uri);
+                        startActivity(intent);
+                    }catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "您未安装天猫APP！！！", Toast.LENGTH_SHORT).show();
+                    }
                     setXuanFu();
                 }
 
@@ -97,27 +107,6 @@ public class MainActivity extends AppCompatActivity {
      * 设置悬浮窗
      */
     private void setXuanFu() {
-//       TextView textView = new TextView(this);
-//
-//        FloatWindow
-//                .with(getApplicationContext())
-//                .setView(textView)
-//                .setWidth(100)                               //设置控件宽高
-//                .setHeight(Screen.width,0.2f)
-//                .setX(100)                                   //设置控件初始位置
-//                .setY(Screen.height,0.3f)
-//                .setDesktopShow(true)                        //桌面显示
-//                .setPermissionListener(new PermissionListener() {
-//                    @Override
-//                    public void onSuccess() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFail() {
-//                        Toast.makeText(MainActivity.this, "请打开悬浮窗", Toast.LENGTH_SHORT).show();
-//                    }
-//                })  //监听权限申请结果
-//                .build();
+
     }
 }
