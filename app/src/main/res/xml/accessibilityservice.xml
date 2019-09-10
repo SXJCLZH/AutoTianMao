@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:accessibilityEventTypes="typeAllMask"
     android:accessibilityFeedbackType="feedbackSpoken"
-    android:accessibilityFlags="flagDefault"
+    android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
     android:canRetrieveWindowContent="true"
+    android:canRequestFilterKeyEvents="true"
+    android:canRequestEnhancedWebAccessibility="true"
     android:description="@string/app_name"
     android:packageNames="com.tmall.wireless"
     tools:ignore="UnusedAttribute" />

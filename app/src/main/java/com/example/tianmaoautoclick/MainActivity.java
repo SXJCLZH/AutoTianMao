@@ -58,15 +58,14 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent intent2 = new Intent(MainActivity.this, MyAccessibilityService.class);
                     startService(intent2);
-
-
-                    //去购物车界面
-                    Intent intent = new Intent();
-                    intent.setAction("android.intent.action.VIEW");
-                    String url = "tmall://page.tm/cart";
-                    Uri uri = Uri.parse(url);
-                    intent.setData(uri);
-                    startActivity(intent);
+                    Toast.makeText(MainActivity.this, "请打开天猫购物车界面进行等待", Toast.LENGTH_SHORT).show();
+//                    去购物车界面
+//                    Intent intent = new Intent();
+//                    intent.setAction("android.intent.action.VIEW");
+//                    String url = "tmall://page.tm/cart";
+//                    Uri uri = Uri.parse(url);
+//                    intent.setData(uri);
+//                    startActivity(intent);
                 }
 
 
