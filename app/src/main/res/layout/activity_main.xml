@@ -34,7 +34,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="开启秒杀任务" />
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="#ffffff"
+            android:background="#313131"
+            android:id="@+id/guanbi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="关闭秒杀任务" />
 
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="#ffffff"
+            android:background="#FF6D00"
+            android:id="@+id/setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="打开辅助设置" />
 
     </LinearLayout>
 

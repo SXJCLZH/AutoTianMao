@@ -1,28 +1,23 @@
 package com.example.tianmaoautoclick;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private Button button;
+    private Intent tianMaoServerIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent1);
                     Toast.makeText(MainActivity.this, "未开启辅助功能", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent2 = new Intent(MainActivity.this, MyAccessibilityService.class);
-                    startService(intent2);
+
+                    tianMaoServerIntent = new Intent(MainActivity.this, MyAccessibilityService.class);
+                    tianMaoServerIntent.putExtra("time", date.getTime());
+
+                    startService(tianMaoServerIntent);
                     Toast.makeText(MainActivity.this, "请打开天猫购物车界面进行等待", Toast.LENGTH_SHORT).show();
 //                    去购物车界面
 //                    Intent intent = new Intent();
@@ -66,12 +64,60 @@ public class MainActivity extends AppCompatActivity {
 //                    Uri uri = Uri.parse(url);
 //                    intent.setData(uri);
 //                    startActivity(intent);
+                    setXuanFu();
                 }
 
 
             }
         });
 
+        findViewById(R.id.guanbi).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (tianMaoServerIntent!=null) {
+                    stopService(tianMaoServerIntent);
+                }
+                System.exit(0);
+            }
+        });
 
+
+        findViewById(R.id.setting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                startActivity(intent1);
+            }
+        });
+
+
+    }
+
+    /**
+     * 设置悬浮窗
+     */
+    private void setXuanFu() {
+//       TextView textView = new TextView(this);
+//
+//        FloatWindow
+//                .with(getApplicationContext())
+//                .setView(textView)
+//                .setWidth(100)                               //设置控件宽高
+//                .setHeight(Screen.width,0.2f)
+//                .setX(100)                                   //设置控件初始位置
+//                .setY(Screen.height,0.3f)
+//                .setDesktopShow(true)                        //桌面显示
+//                .setPermissionListener(new PermissionListener() {
+//                    @Override
+//                    public void onSuccess() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFail() {
+//                        Toast.makeText(MainActivity.this, "请打开悬浮窗", Toast.LENGTH_SHORT).show();
+//                    }
+//                })  //监听权限申请结果
+//                .build();
     }
 }
